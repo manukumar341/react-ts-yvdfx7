@@ -1,13 +1,14 @@
 import { computed } from 'mobx';
 import {
-  computedTree,
+  fromSnapshot,
+  getSnapshot,
   model,
   Model,
   modelAction,
+  prop,
   tProp,
-  transactionMiddleware,
   types,
-  undoMiddleware,
+  undoMiddleware
 } from 'mobx-keystone';
 interface IStore {
   a1: 'X' | 'O' | undefined;
@@ -36,8 +37,9 @@ class Store extends Model({
       c3: types.string,
     }))
   ),
-  isFirstPlayer: tProp(true),
+  currentPlayer: tProp(types.string),
   totalMoves: tProp(0),
+  snapshot: prop(Object),
 }) {
   // onInit() {
   //   const a = transactionMiddleware({
@@ -105,17 +107,32 @@ class Store extends Model({
     }
   }
   @modelAction
+  undoAction() {
+    if (this.board !== fromSnapshot(this.snapshot)) {
+      this.board = fromSnapshot(this.snapshot);
+      this.snapshot = getSnapshot(this.board);
+      this.currentPlayer === 'X'
+        ? (this.currentPlayer = 'O')
+        : (this.currentPlayer = 'X');
+    }
+  }
+
+  @modelAction
   updateBord(key: string) {
     if (!this.board[key]) {
       if (!this.isGameCompleted) {
-        if (this.isFirstPlayer) {
-          this.board[key] = 'X';
-          this.isFirstPlayer = false;
+        if (this.currentPlayer === 'O') {
+          this.snapshot = getSnapshot(this.board);
+          this.board[key] = this.currentPlayer;
+          this.currentPlayer = 'X';
           this.totalMoves += 1;
+          return true;
         } else {
-          this.board[key] = 'O';
-          this.isFirstPlayer = true;
+          this.snapshot = getSnapshot(this.board);
+          this.board[key] = this.currentPlayer;
+          this.currentPlayer = 'O';
           this.totalMoves += 1;
+          return true;
         }
       }
     }
@@ -134,6 +151,7 @@ class Store extends Model({
       b3: '',
       c3: '',
     };
+    this.currentPlayer = 'X';
   }
 }
 
@@ -149,20 +167,8 @@ export const store = new Store({
     b3: '',
     c3: '',
   },
+  currentPlayer: 'X',
 });
-export function createInstance() {
-  const store = new Store({
-    board: {
-      a1: '',
-      b1: '',
-      c1: '',
-      a2: '',
-      b2: '',
-      c2: '',
-      a3: '',
-      b3: '',
-      c3: '',
-    },
-  });
-  return store;
-}
+
+
+const undoManager = undoMiddleware(store.board)

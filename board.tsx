@@ -1,31 +1,42 @@
-import { fromSnapshot, getSnapshot, undoMiddleware } from 'mobx-keystone';
+import {
+  fromSnapshot,
+  getSnapshot,
+  readonlyMiddleware,
+  undoMiddleware,
+} from 'mobx-keystone';
 import { observer } from 'mobx-react';
 import React = require('react');
+import styled from 'styled-components';
 import Boards from './small-board';
-import { createInstance, store } from './store';
+import { store } from './store';
 
 function Board() {
-  // console.log(undoMiddleware(store));
-  const snap = getSnapshot(store);
-  console.log(snap);
-  console.log(fromSnapshot(snap));
-
+  // const { dispose, allowWrite } = readonlyMiddleware(store);
+  const undoManager = undoMiddleware(store.board);
+  console.log(undoManager);
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
   }, []);
+  // store.currentPlayer='MM'
   const handleRestart = React.useCallback(() => {
     // createInstance();
     // store.dummyAction();
     store.restartGame();
   }, []);
-  const playerTurns = store.isFirstPlayer ? (
+  const playerTurns = store.currentPlayer ? (
     <h1>Player: X</h1>
   ) : (
     <h1>Player: O</h1>
   );
+  const handleUndo = React.useCallback(() => {
+    store.undoAction();
+  }, []);
   return (
     <div>
+      <StyledSwitch>
+        <button onClick={handleUndo}>Pass</button>
+      </StyledSwitch>
       <Boards
         handleOnclickBoard={handleOnclickBoard}
         values={store.board}
@@ -37,7 +48,6 @@ function Board() {
           <button onClick={handleRestart}>Restart</button>
         </div>
       )}
-
       {store.isGameOver && (
         <div>
           <h1>Game over!!</h1>
@@ -48,3 +58,9 @@ function Board() {
   );
 }
 export default observer(Board);
+
+const StyledSwitch = styled.div`
+width:400px;
+border:1px solid;
+margin-left:20%;
+`;

@@ -55,6 +55,8 @@ function Boards({
 const StyledDiv = styled.div`
 height:50px;
 width:50px;
+text-align: center;
+padding-top:20px;
 `;
 const StyledDivR = styled(StyledDiv)`
 border-bottom:solid 1px;
@@ -68,7 +70,8 @@ border-right:solid 1px;
 `;
 
 const StyledContainer = styled.div`
-display:flex
+display:flex;
+justify-content: center;
 `;
 
 export default Boards;
