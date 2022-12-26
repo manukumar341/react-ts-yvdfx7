@@ -5,7 +5,9 @@ import {
   Model,
   modelAction,
   tProp,
+  transactionMiddleware,
   types,
+  undoMiddleware,
 } from 'mobx-keystone';
 interface IStore {
   a1: 'X' | 'O' | undefined;
@@ -37,6 +39,21 @@ class Store extends Model({
   isFirstPlayer: tProp(true),
   totalMoves: tProp(0),
 }) {
+  // onInit() {
+  //   const a = transactionMiddleware({
+  //     model: this,
+  //     actionName: 'dummyAction',
+  //   });
+  // }
+  // @modelAction
+  // dummyAction() {
+  //   try {
+  //     let a = 6 / 0;
+  //   } catch {
+  //     throw new Error('sjdfl');
+  //   }
+  // }
+
   @computed
   get isGameOver() {
     return this.totalMoves === 9;
@@ -133,3 +150,19 @@ export const store = new Store({
     c3: '',
   },
 });
+export function createInstance() {
+  const store = new Store({
+    board: {
+      a1: '',
+      b1: '',
+      c1: '',
+      a2: '',
+      b2: '',
+      c2: '',
+      a3: '',
+      b3: '',
+      c3: '',
+    },
+  });
+  return store;
+}

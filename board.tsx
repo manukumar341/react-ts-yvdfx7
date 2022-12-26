@@ -1,15 +1,22 @@
+import { fromSnapshot, getSnapshot, undoMiddleware } from 'mobx-keystone';
 import { observer } from 'mobx-react';
 import React = require('react');
 import Boards from './small-board';
-import { store } from './store';
+import { createInstance, store } from './store';
 
 function Board() {
-  console.log(store);
+  // console.log(undoMiddleware(store));
+  const snap = getSnapshot(store);
+  console.log(snap);
+  console.log(fromSnapshot(snap));
+
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
   }, []);
   const handleRestart = React.useCallback(() => {
+    // createInstance();
+    // store.dummyAction();
     store.restartGame();
   }, []);
   const playerTurns = store.isFirstPlayer ? (
@@ -24,13 +31,11 @@ function Board() {
         values={store.board}
         disable={store.isGameCompleted ? true : false}
       />
-      {store.isGameCompleted ? (
+      {store.isGameCompleted && (
         <div>
-          <h1>Player {store.isGameCompleted}</h1>
+          <h1>winner {store.isGameCompleted}</h1>
           <button onClick={handleRestart}>Restart</button>
         </div>
-      ) : (
-        playerTurns
       )}
 
       {store.isGameOver && (
