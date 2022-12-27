@@ -19,7 +19,6 @@ import { store } from './store';
 function Board() {
   // const { dispose, allowWrite } = readonlyMiddleware(store);
   const undoManager = undoMiddleware(store.board);
-  // console.log(undoManager);
   let patch;
   const snapFun = (curr, pre) => {
     // console.log(curr === pre);
@@ -58,10 +57,7 @@ function Board() {
     const id = e.target.id;
     store.updateBord(id);
   }, []);
-  // store.currentPlayer='MM'
   const handleRestart = React.useCallback(() => {
-    // createInstance();
-    // store.dummyAction();
     store.restartGame();
   }, []);
   const playerTurns = store.currentPlayer ? (
