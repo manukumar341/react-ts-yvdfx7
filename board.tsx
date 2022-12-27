@@ -1,7 +1,13 @@
 import {
+  ActionTrackingResult,
+  applyAction,
   fromSnapshot,
   getSnapshot,
+  onActionMiddleware,
+  onPatches,
+  onSnapshot,
   readonlyMiddleware,
+  serializeActionCall,
   undoMiddleware,
 } from 'mobx-keystone';
 import { observer } from 'mobx-react';
@@ -13,7 +19,41 @@ import { store } from './store';
 function Board() {
   // const { dispose, allowWrite } = readonlyMiddleware(store);
   const undoManager = undoMiddleware(store.board);
-  console.log(undoManager);
+  // console.log(undoManager);
+  let patch;
+  const snapFun = (curr, pre) => {
+    // console.log(curr === pre);
+
+    patch = { ...pre };
+  };
+  // const onSnap = onSnapshot(store, snapFun);
+  onPatches(store, snapFun);
+  const disposel = onActionMiddleware(store, {
+    onStart(actionCall, actionContext) {
+      // const serializableActionCall = serializeActionCall(store, actionCall)
+      // console.log(actionContext);
+      // return {
+      //   result: ActionTrackingResult.Throw,
+      //   value: new Error('whatever'),
+      // };
+      // return {
+      //   result: ActionTrackingResult.Return,
+      //   value: 42,
+      // };
+    },
+    // onFinish(actionCall, actionContext, ret) {
+    //   if (ret.result === ActionTrackingResult.Return) {
+    //     console.log(actionContext);
+    //     console.log(
+    //       'the action succeeded and `ret.value` has the return value'
+    //     );
+    //   } else if (ret.result === ActionTrackingResult.Throw) {
+    //     console.log('// the action threw and `ret.value` has the thrown value');
+    //   }
+    // },
+  });
+  console.log(patch);
+
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
@@ -35,7 +75,7 @@ function Board() {
   return (
     <div>
       <StyledSwitch>
-        <button onClick={handleUndo}>Pass</button>
+        <button onClick={handleUndo}>Undo</button>
       </StyledSwitch>
       <Boards
         handleOnclickBoard={handleOnclickBoard}

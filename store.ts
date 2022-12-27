@@ -7,8 +7,10 @@ import {
   modelAction,
   prop,
   tProp,
+  transaction,
+  transactionMiddleware,
   types,
-  undoMiddleware
+  undoMiddleware,
 } from 'mobx-keystone';
 interface IStore {
   a1: 'X' | 'O' | undefined;
@@ -109,14 +111,16 @@ class Store extends Model({
   @modelAction
   undoAction() {
     if (this.board !== fromSnapshot(this.snapshot)) {
-      this.board = fromSnapshot(this.snapshot);
-      this.snapshot = getSnapshot(this.board);
-      this.currentPlayer === 'X'
-        ? (this.currentPlayer = 'O')
-        : (this.currentPlayer = 'X');
+      if (this.snapshot !== {}) {
+        this.board = fromSnapshot(this.snapshot);
+        this.snapshot = getSnapshot(this.board);
+        this.currentPlayer === 'X'
+          ? (this.currentPlayer = 'O')
+          : (this.currentPlayer = 'X');
+      }
     }
   }
-
+  @transaction
   @modelAction
   updateBord(key: string) {
     if (!this.board[key]) {
@@ -126,7 +130,7 @@ class Store extends Model({
           this.board[key] = this.currentPlayer;
           this.currentPlayer = 'X';
           this.totalMoves += 1;
-          return true;
+          // throw new Error('manjunath');
         } else {
           this.snapshot = getSnapshot(this.board);
           this.board[key] = this.currentPlayer;
@@ -170,5 +174,8 @@ export const store = new Store({
   currentPlayer: 'X',
 });
 
-
-const undoManager = undoMiddleware(store.board)
+const undoManager = undoMiddleware(store.board);
+transactionMiddleware({
+  model: store,
+  actionName: 'updateBord',
+});
