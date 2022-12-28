@@ -17,38 +17,7 @@ import Boards from './small-board';
 import { store } from './store';
 
 function Board() {
-  // const { dispose, allowWrite } = readonlyMiddleware(store);
   const undoManager = undoMiddleware(store.board);
-  const snapFun = (curr, pre) => {
-  };
-  // const onSnap = onSnapshot(store, snapFun);
-  // onPatches(store, snapFun);
-
-  // const disposel = onActionMiddleware(store, {
-    // onStart(actionCall, actionContext) {
-      // const serializableActionCall = serializeActionCall(store, actionCall)
-      // console.log(actionContext);
-      // return {
-      //   result: ActionTrackingResult.Throw,
-      //   value: new Error('whatever'),
-      // };
-      // return {
-      //   result: ActionTrackingResult.Return,
-      //   value: 42,
-      // };
-    },
-    // onFinish(actionCall, actionContext, ret) {
-    //   if (ret.result === ActionTrackingResult.Return) {
-    //     console.log(actionContext);
-    //     console.log(
-    //       'the action succeeded and `ret.value` has the return value'
-    //     );
-    //   } else if (ret.result === ActionTrackingResult.Throw) {
-    //     console.log('// the action threw and `ret.value` has the thrown value');
-    //   }
-    // },
-  // });
-
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);

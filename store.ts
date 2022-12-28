@@ -43,21 +43,6 @@ class Store extends Model({
   totalMoves: tProp(0),
   snapshot: prop(Object),
 }) {
-  // onInit() {
-  //   const a = transactionMiddleware({
-  //     model: this,
-  //     actionName: 'dummyAction',
-  //   });
-  // }
-  // @modelAction
-  // dummyAction() {
-  //   try {
-  //     let a = 6 / 0;
-  //   } catch {
-  //     throw new Error('sjdfl');
-  //   }
-  // }
-
   @computed
   get isGameOver() {
     return this.totalMoves === 9;
