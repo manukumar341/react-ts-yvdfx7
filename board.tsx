@@ -19,16 +19,13 @@ import { store } from './store';
 function Board() {
   // const { dispose, allowWrite } = readonlyMiddleware(store);
   const undoManager = undoMiddleware(store.board);
-  let patch;
   const snapFun = (curr, pre) => {
-    // console.log(curr === pre);
-
-    patch = { ...pre };
   };
   // const onSnap = onSnapshot(store, snapFun);
-  onPatches(store, snapFun);
-  const disposel = onActionMiddleware(store, {
-    onStart(actionCall, actionContext) {
+  // onPatches(store, snapFun);
+
+  // const disposel = onActionMiddleware(store, {
+    // onStart(actionCall, actionContext) {
       // const serializableActionCall = serializeActionCall(store, actionCall)
       // console.log(actionContext);
       // return {
@@ -50,8 +47,7 @@ function Board() {
     //     console.log('// the action threw and `ret.value` has the thrown value');
     //   }
     // },
-  });
-  console.log(patch);
+  // });
 
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
