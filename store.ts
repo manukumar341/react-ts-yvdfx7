@@ -1,4 +1,4 @@
-import { computed } from 'mobx';
+import { action, computed } from 'mobx';
 import {
   fromSnapshot,
   getSnapshot,
@@ -12,17 +12,6 @@ import {
   types,
   undoMiddleware,
 } from 'mobx-keystone';
-interface IStore {
-  a1: 'X' | 'O' | undefined;
-  b1: 'X' | 'O' | undefined;
-  c1: 'X' | 'O' | undefined;
-  a2: 'X' | 'O' | undefined;
-  b2: 'X' | 'O' | undefined;
-  c2: 'X' | 'O' | undefined;
-  a3: 'X' | 'O' | undefined;
-  b3: 'X' | 'O' | undefined;
-  c3: 'X' | 'O' | undefined;
-}
 
 @model('keystone/example')
 class Store extends Model({
@@ -48,51 +37,79 @@ class Store extends Model({
     return this.totalMoves === 9;
   }
 
-  @computed
-  get isGameCompleted() {
-    const board = this.board;
-    if (
-      (board.a1 === 'X' && board.b1 === 'X' && board.c1 === 'X') ||
-      (board.a1 === 'O' && board.b1 === 'O' && board.c1 === 'O')
-    ) {
-      return board.a1;
-    } else if (
-      (board.a2 === 'X' && board.b2 === 'X' && board.c2 === 'X') ||
-      (board.a2 === 'O' && board.b2 === 'O' && board.c2 === 'O')
-    ) {
-      return board.a2;
-    } else if (
-      (board.a3 === 'X' && board.b3 === 'X' && board.c3 === 'X') ||
-      (board.a3 === 'O' && board.b3 === 'O' && board.c3 === 'O')
-    ) {
-      return board.a3;
-    } else if (
-      (board.a1 === 'X' && board.a2 === 'X' && board.a3 === 'X') ||
-      (board.a1 === 'O' && board.a2 === 'O' && board.a3 === 'O')
-    ) {
-      return board.a1;
-    } else if (
-      (board.b1 === 'X' && board.b2 === 'X' && board.b3 === 'X') ||
-      (board.b1 === 'O' && board.b2 === 'O' && board.b3 === 'O')
-    ) {
-      return board.b1;
-    } else if (
-      (board.c1 === 'X' && board.c2 === 'X' && board.c3 === 'X') ||
-      (board.c1 === 'O' && board.c2 === 'O' && board.c3 === 'O')
-    ) {
-      return board.c1;
-    } else if (
-      (board.a1 === 'X' && board.b2 === 'X' && board.c3 === 'X') ||
-      (board.a1 === 'O' && board.b2 === 'O' && board.c3 === 'O')
-    ) {
-      return board.a1;
-    } else if (
-      (board.c1 === 'X' && board.b2 === 'X' && board.a3 === 'X') ||
-      (board.c1 === 'O' && board.b2 === 'O' && board.a3 === 'O')
-    ) {
-      return board.c1;
+  updatePlayerPosition(id: string) {
+    const myPositions = {
+      one: 0,
+      second: 0,
+      three: 0,
+      a: 0,
+      b: 0,
+      c: 0,
+      leftToRight: 0,
+      rightToLeft: 0,
+    };
+    switch (id) {
+      case 'a1':
+        myPositions.one += 1;
+        myPositions.a += 1;
+        myPositions.leftToRight += 1;
+        break;
+      case 'a2':
+        myPositions.a += 1;
+        myPositions.second += 1;
+        break;
+      case 'a3':
+        myPositions.three += 1;
+        myPositions.a += 1;
+        myPositions.rightToLeft += 1;
+        break;
+      case 'b1':
+        myPositions.one += 1;
+        myPositions.b += 1;
+        break;
+      case 'b2':
+        myPositions.leftToRight += 1;
+        myPositions.rightToLeft += 1;
+        myPositions.second += 1;
+        myPositions.b += 1;
+        break;
+      case 'b3':
+        myPositions.three += 1;
+        myPositions.b += 1;
+        break;
+      case 'c1':
+        myPositions.c += 1;
+        myPositions.one += 1;
+        myPositions.rightToLeft += 1;
+        break;
+      case 'c2':
+        myPositions.c += 1;
+        myPositions.second += 1;
+        break;
+      case 'c3':
+        myPositions.c += 1;
+        myPositions.three += 1;
+        myPositions.leftToRight += 1;
+        break;
     }
   }
+
+  isXWin(id: string) {
+    const myPositions = {
+      one: 0,
+      second: 0,
+      three: 0,
+      a: 0,
+      b: 0,
+      c: 0,
+      leftToRight: 0,
+      rightToLeft: 0,
+    };
+  }
+  isOWin() {}
+
+  @modelAction
+  isGameCompleted(id: string) {}
   @modelAction
   undoAction() {
     if (this.board !== fromSnapshot(this.snapshot)) {
