@@ -25,8 +25,11 @@ function Board() {
     <div>
       {store.totalMoves > 0 && (
         <StyledSwitch>
-          {store.isGameCompleted ? (
-            <button onClick={handleRestart}>Restart</button>
+          {store.isGameCompleted || store.totalMoves === 9 ? (
+            <div>
+              <h3>game completed</h3>
+              <button onClick={handleRestart}>Restart</button>
+            </div>
           ) : (
             <button onClick={handleUndo}>Undo</button>
           )}
@@ -37,15 +40,6 @@ function Board() {
         values={store.board}
         disable={store.isGameCompleted}
       />
-      {store.isGameCompleted && (
-        <div>{/* <h1>winner {store.isGameCompleted()}</h1> */}</div>
-      )}
-      {store.isGameOver && (
-        <div>
-          <h1>Game over!!</h1>
-          <button onClick={handleRestart}>Restart</button>
-        </div>
-      )}
     </div>
   );
 }

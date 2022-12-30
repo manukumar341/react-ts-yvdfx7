@@ -19,7 +19,6 @@ export function updatePlayerPositions(
   args.forEach((id) => {
     switch (id) {
       case 'verticalOne':
-        // console.log(board.one, board.two, board.Three);
         playerSymbols.forEach((symbol) => {
           if (
             board.one === symbol &&
@@ -32,7 +31,6 @@ export function updatePlayerPositions(
         break;
 
       case 'verticalTwo':
-        // console.log('verticalTwo');
         playerSymbols.forEach((symbol) => {
           if (
             board.two === symbol &&
@@ -45,7 +43,6 @@ export function updatePlayerPositions(
         break;
 
       case 'verticalThree':
-        // console.log('verticalThree');
         playerSymbols.forEach((symbol) => {
           if (
             board.three === symbol &&
@@ -58,7 +55,6 @@ export function updatePlayerPositions(
         break;
 
       case 'horizontalOne':
-        // console.log('horizontalOne');
         playerSymbols.forEach((symbol) => {
           if (
             board.one === symbol &&
@@ -71,7 +67,6 @@ export function updatePlayerPositions(
         break;
 
       case 'horizontalTwo':
-        // console.log('horizontalTwo');
         playerSymbols.forEach((symbol) => {
           if (
             board.four === symbol &&
@@ -84,7 +79,6 @@ export function updatePlayerPositions(
         break;
 
       case 'horizontalThree':
-        // console.log('horizontalThree');
         playerSymbols.forEach((symbol) => {
           if (
             board.seven === symbol &&
@@ -97,7 +91,6 @@ export function updatePlayerPositions(
         break;
 
       case 'diagonalLeftToRight':
-        // console.log('diagonalLeftToRight');
         playerSymbols.forEach((symbol) => {
           if (
             board.one === symbol &&
@@ -110,7 +103,6 @@ export function updatePlayerPositions(
         break;
 
       case 'diagonalRightToLeft':
-        // console.log('diagonalRightToLeft');
         playerSymbols.forEach((symbol) => {
           if (
             board.seven === symbol &&

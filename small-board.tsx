@@ -12,40 +12,39 @@ function Boards({
   disable: string;
 }) {
   let pathId = [];
-switch(disable){
-  case 'verticalOne':
-    pathId=[1,4,7]
-    break;
+  switch (disable) {
+    case 'verticalOne':
+      pathId = [1, 4, 7];
+      break;
 
-  case 'verticalTwo':
-    pathId=[2,5,8]
-    break;
+    case 'verticalTwo':
+      pathId = [2, 5, 8];
+      break;
 
-  case 'verticalThree':
-    pathId=[3,6,9]
-    break;
+    case 'verticalThree':
+      pathId = [3, 6, 9];
+      break;
 
-  case 'horizontalOne':
-    pathId=[1,2,3]
-    break;
+    case 'horizontalOne':
+      pathId = [1, 2, 3];
+      break;
 
-  case 'horizontalTwo':
-    pathId=[4,5,6]
-    break;
+    case 'horizontalTwo':
+      pathId = [4, 5, 6];
+      break;
 
-  case 'horizontalThree':
-    pathId=[7,8,9]
-    break;
+    case 'horizontalThree':
+      pathId = [7, 8, 9];
+      break;
 
-  case 'diagonalLeftToRight':
-    pathId=[1,5,9]
-    break;
+    case 'diagonalLeftToRight':
+      pathId = [1, 5, 9];
+      break;
 
-  case 'diagonalRightToLeft':
-    pathId=[3,5,7]
-    break;
-
-}
+    case 'diagonalRightToLeft':
+      pathId = [3, 5, 7];
+      break;
+  }
   const v1 = 'verticalOne';
   const v2 = 'verticalTwo';
   const v3 = 'verticalThree';
@@ -152,7 +151,9 @@ height:50px;
 width:50px;
 text-align: center;
 padding-top:20px;
-color:${{currentVal}=>currentVal?'green':'red'};
+color:${(props) => {
+  props.currentVal ? 'green' : 'red';
+}};
 `;
 const StyledDivR = styled(StyledDiv)`
 border-bottom:solid 1px;

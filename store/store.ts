@@ -50,7 +50,6 @@ class Store extends Model({
 
   @modelAction
   updatePossition(id: string) {
-    // console.log(id);
     switch (id) {
       case 'one':
         this.isGameCompleted = updatePlayerPositions(
@@ -59,7 +58,7 @@ class Store extends Model({
           'verticalOne',
           'diagonalLeftToRight'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'two':
         this.isGameCompleted = updatePlayerPositions(
@@ -67,7 +66,7 @@ class Store extends Model({
           'horizontalOne',
           'verticalTwo'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'three':
         this.isGameCompleted = updatePlayerPositions(
@@ -76,7 +75,7 @@ class Store extends Model({
           'verticalThree',
           'diagonalRightToLeft'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'four':
         this.isGameCompleted = updatePlayerPositions(
@@ -84,7 +83,7 @@ class Store extends Model({
           'horizontalTwo',
           'verticalOne'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'five':
         this.isGameCompleted = updatePlayerPositions(
@@ -94,7 +93,7 @@ class Store extends Model({
           'horizontalTwo',
           'verticalTwo'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'six':
         this.isGameCompleted = updatePlayerPositions(
@@ -102,7 +101,7 @@ class Store extends Model({
           'horizontalTwo',
           'verticalThree'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'seven':
         this.isGameCompleted = updatePlayerPositions(
@@ -111,7 +110,7 @@ class Store extends Model({
           'verticalOne',
           'diagonalRightToLeft'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'eight':
         this.isGameCompleted = updatePlayerPositions(
@@ -119,7 +118,7 @@ class Store extends Model({
           'horizontalThree',
           'verticalTwo'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
       case 'nine':
         this.isGameCompleted = updatePlayerPositions(
@@ -128,7 +127,7 @@ class Store extends Model({
           'verticalThree',
           'diagonalLeftToRight'
         );
-        // console.log(this.isGameCompleted ? 'Y' : 'N');
+
         break;
     }
   }
