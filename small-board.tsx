@@ -14,39 +14,39 @@ function Boards({
   return (
     <StyledContainer>
       <span>
-        <StyledDivL id="a1" onClick={handleOnclickBoard}>
-          {values.a1}
+        <StyledDivL id="one" onClick={handleOnclickBoard}>
+          {values.one}
         </StyledDivL>
 
-        <StyledDivL id="b1" onClick={handleOnclickBoard}>
-          {values.b1}
+        <StyledDivL id="two" onClick={handleOnclickBoard}>
+          {values.two}
         </StyledDivL>
-        <StyledDivBottom id="c1" onClick={handleOnclickBoard}>
-          {values.c1}
+        <StyledDivBottom id="three" onClick={handleOnclickBoard}>
+          {values.three}
         </StyledDivBottom>
       </span>
       <span>
-        <StyledDivL id="a2" onClick={handleOnclickBoard}>
-          {values.a2}
+        <StyledDivL id="four" onClick={handleOnclickBoard}>
+          {values.four}
         </StyledDivL>
 
-        <StyledDivL id="b2" onClick={handleOnclickBoard}>
-          {values.b2}
+        <StyledDivL id="five" onClick={handleOnclickBoard}>
+          {values.five}
         </StyledDivL>
 
-        <StyledDivBottom id="c2" onClick={handleOnclickBoard}>
-          {values.c2}
+        <StyledDivBottom id="six" onClick={handleOnclickBoard}>
+          {values.six}
         </StyledDivBottom>
       </span>
       <span>
-        <StyledDivR id="a3" onClick={handleOnclickBoard}>
-          {values.a3}
+        <StyledDivR id="seven" onClick={handleOnclickBoard}>
+          {values.seven}
         </StyledDivR>
-        <StyledDivR id="b3" onClick={handleOnclickBoard}>
-          {values.b3}
+        <StyledDivR id="eight" onClick={handleOnclickBoard}>
+          {values.eight}
         </StyledDivR>
-        <StyledDiv id="c3" onClick={handleOnclickBoard}>
-          {values.c3}
+        <StyledDiv id="nine" onClick={handleOnclickBoard}>
+          {values.nine}
         </StyledDiv>
       </span>
     </StyledContainer>

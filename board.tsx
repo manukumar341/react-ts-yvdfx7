@@ -14,10 +14,9 @@ import { observer } from 'mobx-react';
 import React = require('react');
 import styled from 'styled-components';
 import Boards from './small-board';
-import { store } from './store';
+import { store } from './store/store';
 
 function Board() {
-  const undoManager = undoMiddleware(store.board);
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
@@ -45,7 +44,7 @@ function Board() {
       />
       {store.isGameCompleted && (
         <div>
-          <h1>winner {store.isGameCompleted}</h1>
+          {/* <h1>winner {store.isGameCompleted()}</h1> */}
           <button onClick={handleRestart}>Restart</button>
         </div>
       )}
