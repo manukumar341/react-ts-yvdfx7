@@ -11,7 +11,7 @@ import {
   transaction,
   types,
 } from 'mobx-keystone';
-import { updatePlayerPositions } from './updater';
+import { updatePlayerPossition } from './updater';
 
 const initialValue = {
   one: '',
@@ -53,7 +53,7 @@ class Store extends Model({
   updatePossition(id: string) {
     switch (id) {
       case 'one':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalOne',
           'verticalOne',
@@ -62,7 +62,7 @@ class Store extends Model({
 
         break;
       case 'two':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalOne',
           'verticalTwo'
@@ -70,7 +70,7 @@ class Store extends Model({
 
         break;
       case 'three':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalOne',
           'verticalThree',
@@ -79,7 +79,7 @@ class Store extends Model({
 
         break;
       case 'four':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalTwo',
           'verticalOne'
@@ -87,7 +87,7 @@ class Store extends Model({
 
         break;
       case 'five':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'diagonalLeftToRight',
           'diagonalRightToLeft',
@@ -97,7 +97,7 @@ class Store extends Model({
 
         break;
       case 'six':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalTwo',
           'verticalThree'
@@ -105,7 +105,7 @@ class Store extends Model({
 
         break;
       case 'seven':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalThree',
           'verticalOne',
@@ -114,7 +114,7 @@ class Store extends Model({
 
         break;
       case 'eight':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalThree',
           'verticalTwo'
@@ -122,7 +122,7 @@ class Store extends Model({
 
         break;
       case 'nine':
-        this.isGameCompleted = updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPossition(
           this.board,
           'horizontalThree',
           'verticalThree',
@@ -157,10 +157,12 @@ class Store extends Model({
       console.log(this.board);
     }
   }
+
   @modelAction
   restartGame() {
     this.totalMoves = 0;
     this.board = { ...initialValue };
+    applySet(this.board, initialValue);
     this.currentPlayer = 'X';
     this.isGameCompleted = '';
   }

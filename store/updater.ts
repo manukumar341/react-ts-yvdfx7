@@ -1,4 +1,4 @@
-export function updatePlayerPositions(
+export function updatePlayerPossition(
   board: {
     one: string;
     two: string;
