@@ -17,6 +17,7 @@ import Boards from './small-board';
 import { store } from './store/store';
 
 function Board() {
+  console.log(store);
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);

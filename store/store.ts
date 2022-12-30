@@ -1,6 +1,5 @@
 import { action, computed } from 'mobx';
 import {
-  deepEquals,
   fromSnapshot,
   getSnapshot,
   model,
@@ -9,11 +8,18 @@ import {
   prop,
   tProp,
   transaction,
-  transactionMiddleware,
   types,
-  undoMiddleware,
 } from 'mobx-keystone';
 import { updatePlayerPositions } from './updater';
+interface Ipositions {
+  horizontalThree?: { X: number; O: number };
+  verticalThree?: { X: number; O: number };
+  verticalTwo?: { X: number; O: number };
+  verticalOne?: { X: number; O: number };
+  horizontalOne?: { X: number; O: number };
+  diagonalLeftToRight?: { X: number; O: number };
+  diagonalRightToLeft?: { X: number; O: number };
+}
 
 const initialValue = {
   one: '',
@@ -42,6 +48,7 @@ class Store extends Model({
     }))
   ),
   currentPlayer: tProp(types.string),
+  isGameCompleted: tProp(types.boolean, false),
   totalMoves: tProp(0),
   snapshot: prop(Object),
 }) {
@@ -51,10 +58,58 @@ class Store extends Model({
   }
 
   @modelAction
-  isGameCompleted(id: string) {
-
-    const currentPlayer = this.currentPlayer;
-    return updatePlayerPositions({ id, currentPlayer });
+  updatePossition(id: string) {
+    switch (id) {
+      case 'one':
+        updatePlayerPositions(
+          'horizontalOne',
+          'verticalOne',
+          'diagonalLeftToRight'
+        );
+        break;
+      case 'two':
+        updatePlayerPositions('horizontalOne', 'verticalTwo');
+        break;
+      case 'three':
+        updatePlayerPositions(
+          'horizontalOne',
+          'verticalThree',
+          'diagonalRightToLeft'
+        );
+        break;
+      case 'four':
+        updatePlayerPositions('horizontalOne', 'verticalOne');
+        break;
+      case 'five':
+        updatePlayerPositions(
+          'diagonalLeftToRight',
+          'diagonalRightToLeft',
+          'horizontalOne',
+          'verticalTwo'
+        );
+        break;
+      case 'six':
+        updatePlayerPositions('horizontalOne', 'verticalThree');
+        break;
+      case 'seven':
+        updatePlayerPositions(
+          'horizontalOne',
+          'verticalOne',
+          'diagonalRightToLeft'
+        );
+        break;
+      case 'eight':
+        updatePlayerPositions('horizontalOne', 'verticalTwo');
+        break;
+      case 'nine':
+        updatePlayerPositions(
+          'horizontalThree',
+          'verticalThree',
+          'diagonalLeftToRight'
+        );
+        break;
+    }
+    return;
   }
 
   @modelAction
@@ -69,30 +124,16 @@ class Store extends Model({
       }
     }
   }
-  @transaction
+
   @modelAction
   updateBord(key: string) {
-    // if (!this.board[key]) {
-    // if (!this.isGameCompleted(key)) {
-    if (this.currentPlayer === 'O') {
+    if (!this.board[key]) {
       this.snapshot = getSnapshot(this.board);
       this.board[key] = this.currentPlayer;
-      this.currentPlayer = 'X';
+      this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
       this.totalMoves += 1;
-      // throw new Error('manjunath');
-    } else {
-      this.snapshot = getSnapshot(this.board);
-      this.board[key] = this.currentPlayer;
-      this.currentPlayer = 'O';
-      this.totalMoves += 1;
-      // return true;
+      this.updatePossition(key);
     }
-    console.log(this.isGameCompleted(key));
-    if (this.isGameCompleted(key)) {
-      this.totalMoves = 9;
-    }
-    // }
-    // }
   }
   @modelAction
   restartGame() {
@@ -103,6 +144,16 @@ class Store extends Model({
 }
 
 export const store = new Store({
-  board: { ...initialValue },
+  board: {
+    one: '',
+    two: '',
+    three: '',
+    four: '',
+    five: '',
+    six: '',
+    seven: '',
+    eight: '',
+    nine: '',
+  },
   currentPlayer: 'X',
 });
