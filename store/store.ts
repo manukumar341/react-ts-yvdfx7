@@ -52,17 +52,9 @@ class Store extends Model({
 
   @modelAction
   isGameCompleted(id: string) {
-    const possibleWinnings = {
-      horizontalOne: 0,
-      horizontalTwo: 0,
-      horizontalThree: 0,
-      verticalOne: 0,
-      verticalTwo: 0,
-      verticalThree: 0,
-      diagonalLeftToRight: 0,
-      diagonalRightToLeft: 0,
-    };
-    return updatePlayerPositions({ possibleWinnings, id });
+
+    const currentPlayer = this.currentPlayer;
+    return updatePlayerPositions({ id, currentPlayer });
   }
 
   @modelAction
@@ -95,10 +87,10 @@ class Store extends Model({
       this.totalMoves += 1;
       // return true;
     }
-    console.log(this.snapshot);
-    const currSnap = getSnapshot(this.board);
-    console.log(currSnap);
-    console.log(deepEquals(this.snapshot, this.snapshot));
+    console.log(this.isGameCompleted(key));
+    if (this.isGameCompleted(key)) {
+      this.totalMoves = 9;
+    }
     // }
     // }
   }

@@ -18,32 +18,32 @@ function Boards({
           {values.one}
         </StyledDivL>
 
-        <StyledDivL id="two" onClick={handleOnclickBoard}>
-          {values.two}
+        <StyledDivL id="four" onClick={handleOnclickBoard}>
+          {values.four}
         </StyledDivL>
-        <StyledDivBottom id="three" onClick={handleOnclickBoard}>
-          {values.three}
+        <StyledDivBottom id="seven" onClick={handleOnclickBoard}>
+          {values.seven}
         </StyledDivBottom>
       </span>
       <span>
-        <StyledDivL id="four" onClick={handleOnclickBoard}>
-          {values.four}
+        <StyledDivL id="two" onClick={handleOnclickBoard}>
+          {values.two}
         </StyledDivL>
 
         <StyledDivL id="five" onClick={handleOnclickBoard}>
           {values.five}
         </StyledDivL>
 
-        <StyledDivBottom id="six" onClick={handleOnclickBoard}>
-          {values.six}
+        <StyledDivBottom id="eight" onClick={handleOnclickBoard}>
+          {values.eight}
         </StyledDivBottom>
       </span>
       <span>
-        <StyledDivR id="seven" onClick={handleOnclickBoard}>
-          {values.seven}
+        <StyledDivR id="three" onClick={handleOnclickBoard}>
+          {values.three}
         </StyledDivR>
-        <StyledDivR id="eight" onClick={handleOnclickBoard}>
-          {values.eight}
+        <StyledDivR id="six" onClick={handleOnclickBoard}>
+          {values.six}
         </StyledDivR>
         <StyledDiv id="nine" onClick={handleOnclickBoard}>
           {values.nine}
