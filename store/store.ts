@@ -11,15 +11,6 @@ import {
   types,
 } from 'mobx-keystone';
 import { updatePlayerPositions } from './updater';
-interface Ipositions {
-  horizontalThree?: { X: number; O: number };
-  verticalThree?: { X: number; O: number };
-  verticalTwo?: { X: number; O: number };
-  verticalOne?: { X: number; O: number };
-  horizontalOne?: { X: number; O: number };
-  diagonalLeftToRight?: { X: number; O: number };
-  diagonalRightToLeft?: { X: number; O: number };
-}
 
 const initialValue = {
   one: '',
@@ -48,7 +39,7 @@ class Store extends Model({
     }))
   ),
   currentPlayer: tProp(types.string),
-  isGameCompleted: tProp(types.boolean, false),
+  isGameCompleted: tProp(types.string, ''),
   totalMoves: tProp(0),
   snapshot: prop(Object),
 }) {
@@ -59,57 +50,87 @@ class Store extends Model({
 
   @modelAction
   updatePossition(id: string) {
+    // console.log(id);
     switch (id) {
       case 'one':
-        updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
           'horizontalOne',
           'verticalOne',
           'diagonalLeftToRight'
         );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'two':
-        updatePlayerPositions('horizontalOne', 'verticalTwo');
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
+          'horizontalOne',
+          'verticalTwo'
+        );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'three':
-        updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
           'horizontalOne',
           'verticalThree',
           'diagonalRightToLeft'
         );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'four':
-        updatePlayerPositions('horizontalOne', 'verticalOne');
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
+          'horizontalTwo',
+          'verticalOne'
+        );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'five':
-        updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
           'diagonalLeftToRight',
           'diagonalRightToLeft',
-          'horizontalOne',
+          'horizontalTwo',
           'verticalTwo'
         );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'six':
-        updatePlayerPositions('horizontalOne', 'verticalThree');
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
+          'horizontalTwo',
+          'verticalThree'
+        );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'seven':
-        updatePlayerPositions(
-          'horizontalOne',
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
+          'horizontalThree',
           'verticalOne',
           'diagonalRightToLeft'
         );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'eight':
-        updatePlayerPositions('horizontalOne', 'verticalTwo');
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
+          'horizontalThree',
+          'verticalTwo'
+        );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
       case 'nine':
-        updatePlayerPositions(
+        this.isGameCompleted = updatePlayerPositions(
+          this.board,
           'horizontalThree',
           'verticalThree',
           'diagonalLeftToRight'
         );
+        // console.log(this.isGameCompleted ? 'Y' : 'N');
         break;
     }
-    return;
   }
 
   @modelAction
@@ -127,7 +148,8 @@ class Store extends Model({
 
   @modelAction
   updateBord(key: string) {
-    if (!this.board[key]) {
+    // console.log(key);
+    if (!this.board[key] && !this.isGameCompleted) {
       this.snapshot = getSnapshot(this.board);
       this.board[key] = this.currentPlayer;
       this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
@@ -140,6 +162,7 @@ class Store extends Model({
     this.totalMoves = 0;
     this.board = { ...initialValue };
     this.currentPlayer = 'X';
+    this.isGameCompleted = '';
   }
 }
 

@@ -1,15 +1,3 @@
-import {
-  ActionTrackingResult,
-  applyAction,
-  fromSnapshot,
-  getSnapshot,
-  onActionMiddleware,
-  onPatches,
-  onSnapshot,
-  readonlyMiddleware,
-  serializeActionCall,
-  undoMiddleware,
-} from 'mobx-keystone';
 import { observer } from 'mobx-react';
 import React = require('react');
 import styled from 'styled-components';
@@ -17,7 +5,7 @@ import Boards from './small-board';
 import { store } from './store/store';
 
 function Board() {
-  console.log(store);
+  store.isGameCompleted && console.log(store.isGameCompleted);
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
@@ -35,19 +23,22 @@ function Board() {
   }, []);
   return (
     <div>
-      <StyledSwitch>
-        <button onClick={handleUndo}>Undo</button>
-      </StyledSwitch>
+      {store.totalMoves > 0 && (
+        <StyledSwitch>
+          {store.isGameCompleted ? (
+            <button onClick={handleRestart}>Restart</button>
+          ) : (
+            <button onClick={handleUndo}>Undo</button>
+          )}
+        </StyledSwitch>
+      )}
       <Boards
         handleOnclickBoard={handleOnclickBoard}
         values={store.board}
-        disable={store.isGameCompleted ? true : false}
+        disable={store.isGameCompleted}
       />
       {store.isGameCompleted && (
-        <div>
-          {/* <h1>winner {store.isGameCompleted()}</h1> */}
-          <button onClick={handleRestart}>Restart</button>
-        </div>
+        <div>{/* <h1>winner {store.isGameCompleted()}</h1> */}</div>
       )}
       {store.isGameOver && (
         <div>

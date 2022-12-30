@@ -1,112 +1,127 @@
-export function updatePlayerPositions(...args) {
+export function updatePlayerPositions(
+  board: {
+    one: string;
+    two: string;
+    Three: string;
+    four: string;
+    five: string;
+    six: string;
+    seven: string;
+    eight: string;
+    nine: string;
+    Two: string;
+    three: string;
+  },
+  ...args: string[]
+) {
+  let res = '';
   const playerSymbols = ['X', 'O'];
   args.forEach((id) => {
     switch (id) {
       case 'verticalOne':
+        // console.log(board.one, board.two, board.Three);
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.one === symbol &&
-            this.board.two === symbol &&
-            this.board.Three === symbol
+            board.one === symbol &&
+            board.four === symbol &&
+            board.seven === symbol
           ) {
-            console.log('verticalOne');
-            return 'verticalOne';
+            res = 'verticalOne';
           }
         });
         break;
 
       case 'verticalTwo':
+        // console.log('verticalTwo');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.four === symbol &&
-            this.board.five === symbol &&
-            this.board.six === symbol
+            board.two === symbol &&
+            board.five === symbol &&
+            board.eight === symbol
           ) {
-            console.log('verticalTwo');
-
-            return 'verticalTwo';
+            res = 'verticalTwo';
           }
         });
         break;
 
       case 'verticalThree':
+        // console.log('verticalThree');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.seven === symbol &&
-            this.board.eight === symbol &&
-            this.board.nine === symbol
+            board.three === symbol &&
+            board.six === symbol &&
+            board.nine === symbol
           ) {
-            console.log('verticalThree');
-
-            return 'verticalThree';
+            res = 'verticalThree';
           }
         });
         break;
 
       case 'horizontalOne':
+        // console.log('horizontalOne');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.one === symbol &&
-            this.board.four === symbol &&
-            this.board.seven === symbol
+            board.one === symbol &&
+            board.two === symbol &&
+            board.three === symbol
           ) {
-            console.log('horizontalOne');
-            return 'horizontalOne';
+            res = 'horizontalOne';
           }
         });
         break;
 
       case 'horizontalTwo':
+        // console.log('horizontalTwo');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.Two === symbol &&
-            this.board.five === symbol &&
-            this.board.eight === symbol
+            board.four === symbol &&
+            board.five === symbol &&
+            board.six === symbol
           ) {
-            console.log('horizontalTwo');
-            return 'horizontalTwo';
+            res = 'horizontalTwo';
           }
         });
         break;
 
       case 'horizontalThree':
+        // console.log('horizontalThree');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.Three === symbol &&
-            this.board.six === symbol &&
-            this.board.nine === symbol
+            board.seven === symbol &&
+            board.eight === symbol &&
+            board.nine === symbol
           ) {
-            console.log('horizontalThree');
-            return 'horizontalThree';
+            res = 'horizontalThree';
           }
         });
         break;
 
       case 'diagonalLeftToRight':
+        // console.log('diagonalLeftToRight');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.one === symbol &&
-            this.board.five === symbol &&
-            this.board.nine === symbol
+            board.one === symbol &&
+            board.five === symbol &&
+            board.nine === symbol
           ) {
-            console.log('diagonalLeftToRight');
-            return 'diagonalLeftToRight';
+            res = 'diagonalLeftToRight';
           }
         });
         break;
 
       case 'diagonalRightToLeft':
+        // console.log('diagonalRightToLeft');
         playerSymbols.forEach((symbol) => {
           if (
-            this.board.seven === symbol &&
-            this.board.five === symbol &&
-            this.board.three === symbol
+            board.seven === symbol &&
+            board.five === symbol &&
+            board.three === symbol
           ) {
-            console.log('diagonalRightToLeft');
-            return 'diagonalRightToLeft';
+            res = 'diagonalRightToLeft';
           }
         });
         break;
     }
   });
+  return res;
 }
