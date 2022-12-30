@@ -133,7 +133,7 @@ switch(disable){
         <StyledDiv
           id="nine"
           onClick={handleOnclickBoard}
-          path={pathId.find((id)=>{id==(e) => {e.target.id}})}
+          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.nine}
@@ -152,7 +152,7 @@ height:50px;
 width:50px;
 text-align: center;
 padding-top:20px;
-color:${prop=>path.}
+color:${{currentVal}=>currentVal?'green':'red'};
 `;
 const StyledDivR = styled(StyledDiv)`
 border-bottom:solid 1px;
