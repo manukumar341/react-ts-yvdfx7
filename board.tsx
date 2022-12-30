@@ -5,31 +5,41 @@ import Boards from './small-board';
 import { store } from './store/store';
 
 function Board() {
-  store.isGameCompleted && console.log(store.isGameCompleted);
   const handleOnclickBoard = React.useCallback((e: any) => {
     const id = e.target.id;
     store.updateBord(id);
   }, []);
+
   const handleRestart = React.useCallback(() => {
     store.restartGame();
   }, []);
-  const playerTurns = store.currentPlayer ? (
-    <h1>Player: X</h1>
-  ) : (
-    <h1>Player: O</h1>
-  );
+
+  const gameWin = React.useMemo(() => {
+    <div>
+      <h3>game completed</h3>
+      <button onClick={handleRestart}>Restart</button>
+    </div>;
+  }, [handleRestart]);
+
+  const gameRestart = React.useMemo(() => {
+    <div>
+      <h3>restart the game !!</h3>
+      <button onClick={handleRestart}>Restart</button>
+    </div>;
+  }, [handleRestart]);
+
   const handleUndo = React.useCallback(() => {
     store.undoAction();
   }, []);
   return (
     <div>
+      <h1>Player {store.currentPlayer}</h1>
       {store.totalMoves > 0 && (
         <StyledSwitch>
-          {store.isGameCompleted || store.totalMoves === 9 ? (
-            <div>
-              <h3>game completed</h3>
-              <button onClick={handleRestart}>Restart</button>
-            </div>
+          {store.isGameCompleted ? (
+            gameWin
+          ) : store.totalMoves === 9 ? (
+            gameRestart
           ) : (
             <button onClick={handleUndo}>Undo</button>
           )}

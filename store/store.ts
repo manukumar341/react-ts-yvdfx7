@@ -1,5 +1,6 @@
 import { action, computed } from 'mobx';
 import {
+  applySet,
   fromSnapshot,
   getSnapshot,
   model,
@@ -147,13 +148,13 @@ class Store extends Model({
 
   @modelAction
   updateBord(key: string) {
-    // console.log(key);
     if (!this.board[key] && !this.isGameCompleted) {
       this.snapshot = getSnapshot(this.board);
-      this.board[key] = this.currentPlayer;
+      applySet(this.board, key, this.currentPlayer);
       this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
       this.totalMoves += 1;
       this.updatePossition(key);
+      console.log(this.board);
     }
   }
   @modelAction
