@@ -11,55 +11,12 @@ function Boards({
   values: any;
   disable: string;
 }) {
-  let pathId = [];
-  switch (disable) {
-    case 'verticalOne':
-      pathId = [1, 4, 7];
-      break;
-
-    case 'verticalTwo':
-      pathId = [2, 5, 8];
-      break;
-
-    case 'verticalThree':
-      pathId = [3, 6, 9];
-      break;
-
-    case 'horizontalOne':
-      pathId = [1, 2, 3];
-      break;
-
-    case 'horizontalTwo':
-      pathId = [4, 5, 6];
-      break;
-
-    case 'horizontalThree':
-      pathId = [7, 8, 9];
-      break;
-
-    case 'diagonalLeftToRight':
-      pathId = [1, 5, 9];
-      break;
-
-    case 'diagonalRightToLeft':
-      pathId = [3, 5, 7];
-      break;
-  }
-  const v1 = 'verticalOne';
-  const v2 = 'verticalTwo';
-  const v3 = 'verticalThree';
-  const h1 = 'horizontalOne';
-  const h2 = 'horizontalTwo';
-  const h3 = 'horizontalThree';
-  const ltr = 'diagonalLeftToRight';
-  const rtl = 'diagonalRightToLeft';
   return (
     <StyledContainer>
       <span>
         <StyledDivL
           id="one"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.one}
@@ -68,7 +25,6 @@ function Boards({
         <StyledDivL
           id="four"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.four}
@@ -76,7 +32,6 @@ function Boards({
         <StyledDivBottom
           id="seven"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.seven}
@@ -86,7 +41,6 @@ function Boards({
         <StyledDivL
           id="two"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
           storedVal={values.two}
         >
@@ -96,7 +50,6 @@ function Boards({
         <StyledDivL
           id="five"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
           storedVal={values.five}
         >
@@ -106,7 +59,6 @@ function Boards({
         <StyledDivBottom
           id="eight"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.eight}
@@ -116,7 +68,6 @@ function Boards({
         <StyledDivR
           id="three"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.three}
@@ -124,7 +75,6 @@ function Boards({
         <StyledDivR
           id="six"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.six}
@@ -132,7 +82,6 @@ function Boards({
         <StyledDiv
           id="nine"
           onClick={handleOnclickBoard}
-          path={pathId}
           currentVal={(e) => e.target.id}
         >
           {values.nine}

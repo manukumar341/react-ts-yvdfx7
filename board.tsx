@@ -14,24 +14,6 @@ function Board() {
     store.restartGame();
   }, []);
 
-  const gameWin = React.useMemo(() => {
-    if (store.isGameCompleted) {
-      <div>
-        <h3>game completed</h3>
-        <button onClick={handleRestart}>Restart</button>
-      </div>;
-    }
-  }, [handleRestart]);
-
-  const gameRestart = React.useMemo(() => {
-    if (store.totalMoves === 9) {
-      <div>
-        <h3>restart the game !!</h3>
-        <button onClick={handleRestart}>Restart</button>
-      </div>;
-    }
-  }, [handleRestart]);
-
   const handleUndo = React.useCallback(() => {
     store.undoAction();
   }, []);
@@ -40,9 +22,19 @@ function Board() {
       <h1>Player {store.currentPlayer}</h1>
       {store.totalMoves > 0 && (
         <StyledSwitch>
-          {gameWin}
+          {store.isGameCompleted && (
+            <div>
+              <h3>game completed</h3>
+              <button onClick={handleRestart}>Restart</button>
+            </div>
+          )}
 
-          {gameRestart}
+          {store.totalMoves === 9 && (
+            <div>
+              <h3>restart the game !!</h3>
+              <button onClick={handleRestart}>Restart</button>
+            </div>
+          )}
         </StyledSwitch>
       )}
       <Boards
